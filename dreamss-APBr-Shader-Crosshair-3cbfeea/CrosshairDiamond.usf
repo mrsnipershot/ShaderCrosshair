@@ -1,0 +1,113 @@
+/***************************************************************************************/
+/*! \file CrosshairSquare.usf
+* 
+* Modular crosshair shape - Diamond by Kimiko
+* Requires Crosshair.usf, CrosshairSettings.usf
+* 
+* Please see the readme or CrosshairSettings.usf for settings to change
+* You don't need to make changes to this file.
+****************************************************************************************/
+{
+	int DRAW_CROSSHAIR_DIAMOND = 0;
+	int DRAW_CROSSHAIR_DIAMOND_OUTLINE = 0;
+	
+    if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP && SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP && SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP && SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE && SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE && SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) +  CROSSHAIR_DIAMOND_GAP  && SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP && SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP && SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP && SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE && SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE && SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) -  CROSSHAIR_DIAMOND_GAP  && SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND = 1;
+    }
+    //outline code start
+    //LEFT
+    //left top
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP - (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP + ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS )
+    	&& SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS + CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    //left bottom
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP - (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE - CROSSHAIR_DIAMOND_GAP + ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS)
+    	&& SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS - CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) - CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    //BOTTOM
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS)
+    	&& SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) +  CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS + CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS) 
+    	&& SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS - CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) + CROSSHAIR_DIAMOND_GAP
+    	&& SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    //RIGHT    
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP - ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP + (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS + CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP - ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS)  
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + CROSSHAIR_DIAMOND_GAP + (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x >= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS - CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) + CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (chevronaspectRatio * SceneUV.y + ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) + CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    //TOP
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS)  
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS + CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    else if (SceneUV.x >= 0.5 - CROSSHAIR_DIAMOND_SIZE - ((CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) * CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS) 
+    	&& SceneUV.x <= 0.5 + CROSSHAIR_DIAMOND_SIZE + (CROSSHAIR_DIAMOND_OUTLINE_THICKNESS / 2.0) 
+    	&& SceneUV.x >= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 - CROSSHAIR_DIAMOND_THICKNESS - CROSSHAIR_DIAMOND_OUTLINE_THICKNESS) -  CROSSHAIR_DIAMOND_GAP 
+    	&& SceneUV.x <= (1 - chevronaspectRatio * SceneUV.y - ( 1 - chevronaspectRatio ) / 2 + CROSSHAIR_DIAMOND_THICKNESS) - CROSSHAIR_DIAMOND_GAP)
+    {
+        DRAW_CROSSHAIR_DIAMOND_OUTLINE = 1;
+    }
+    //outline code end
+
+
+    if (DRAW_CROSSHAIR_DIAMOND == 1)
+	{
+		CROSSHAIR_PIXEL_DRAWN = 1;
+
+		#if CROSSHAIR_DIAMOND_DYNAMIC_COLOR
+			OutColor.rgb = lerp(OutColor.rgb, float3(1.0,1.0,1.0) - OutColor.rgb, CROSSHAIR_DIAMOND_COLOR.a);
+		#else
+			OutColor.rgb = lerp(OutColor.rgb, CROSSHAIR_DIAMOND_COLOR.rgb, CROSSHAIR_DIAMOND_COLOR.a);
+		#endif	
+	}
+	//outline code start
+      if (DRAW_CROSSHAIR_DIAMOND_OUTLINE == 1 && CROSSHAIR_DIAMOND_OUTLINE_ENABLE == 1)
+      	{
+      	CROSSHAIR_PIXEL_DRAWN = 1;
+        OutColor.rgb = lerp(OutColor.rgb, CROSSHAIR_DIAMOND_OUTLINE_COLOR.rgb, CROSSHAIR_DIAMOND_OUTLINE_COLOR.a);		
+      	}
+  //outline code end	
+}

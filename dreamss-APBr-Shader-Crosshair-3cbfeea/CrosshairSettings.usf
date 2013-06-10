@@ -1,0 +1,171 @@
+/***************************************************************************************/
+/*! \file CrosshairSettings.usf
+* 
+* Configuration options for modular crosshair
+* 
+* 
+* Owned by dreamss, some code stolen from tobii and spec
+*
+* variable crosshair size added by Kimiko
+* and pretty much every change after that ... DYNAMIC_COLOR, internal color options, and making it work on rtw/1.9.1 shaders
+* fuckshadercoding
+*
+* Thanks to Blizzie for the alternative crosshair shapes Dot 2, Circle, and Cross
+* Thanks to Inteoix for OPGL-shaped crosshairs and pointing out how to fix alpha
+*
+*
+* Usage: 
+*   See below for what each setting does, and edit to your liking.
+*
+* DONT FORGET TO EDIT SCREEN_SIZE_X and SCREEN_SIZE_Y 
+*
+* IF THE GAME CRASHES CROSSHAIR_SIZE IS WAY TOO BIG!
+****************************************************************************************/
+
+{
+// 1 = enable 
+#define ENABLE_CROSSHAIR 1
+#define ENABLE_CROSSHAIR_DOT_1 1
+#define ENABLE_CROSSHAIR_DOT_2 0
+#define ENABLE_CROSSHAIR_TOP_CHEVRON 0
+#define ENABLE_CROSSHAIR_BOTTOM_CHEVRON 0
+#define ENABLE_CROSSHAIR_CIRCLE 0
+#define ENABLE_CROSSHAIR_CROSS 0
+#define ENABLE_CROSSHAIR_OPGL 0
+#define ENABLE_CROSSHAIR_SQUARE 0
+#define ENABLE_CROSSHAIR_DIAMOND 0
+
+// User created crosshairs (not included). default filenames are CrosshairCustom1.usf CrosshairCustom2.usf CrosshairCustom3.usf CrosshairCustom4.usf CrosshairCustom5.usf
+#define ENABLE_CROSSHAIR_CUSTOM_1 0
+#define ENABLE_CROSSHAIR_CUSTOM_2 0
+#define ENABLE_CROSSHAIR_CUSTOM_3 0
+#define ENABLE_CROSSHAIR_CUSTOM_4 0
+#define ENABLE_CROSSHAIR_CUSTOM_5 0
+
+
+// Monitor resolution, INCLUDE THE .0 OR OTHER THINGS BREAK!!!
+#define SCREEN_SIZE_X 1920.0
+#define SCREEN_SIZE_Y 1080.0
+
+
+// Limit the area at the center to check where to draw the crosshair. We dont want to run on every pixel do we?
+// Set it bigger if your crosshair gets cutoff
+// 0.0-100.0 where 100 means scan 100% of the screen
+#define CROSSHAIR_PIXEL_SCAN_LIMIT 8.0
+
+
+// Dot 1 shape settings
+#define CROSSHAIR_DOT_1_SIZE .8
+//thickness of the dot outline, make number bigger if it cant be seen
+#define CROSSHAIR_DOT_1_OUT_SIZE_MULTI 2.0
+// R, G, B, Alpha with a range of 0.0 to 1.0
+#define IN_CROSSHAIR_DOT_1_COLOR float4( 1.0, 1.0, 1.0, 0.5)
+#define OUT_CROSSHAIR_DOT_1_COLOR float4( 0.0, 0.0, 0.0, 0.5)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define IN_CROSSHAIR_DOT_1_DYNAMIC_COLOR 0
+#define OUT_CROSSHAIR_DOT_1_DYNAMIC_COLOR 0
+
+
+// Blizzie dot shape settings
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_DOT_2_COLOR float4(1.0, 0.0, 0.0, 0.1)
+
+
+// Chevron aspect ratio settings, leave this alone for a standard 90 degree spacing. Don't touch if you don't know what you're doing.
+#define chevronaspectRatio SCREEN_SIZE_Y/SCREEN_SIZE_X
+
+// Top chevron shape settings
+#define CROSSHAIR_TOP_CHEVRON_THICKNESS .001
+#define CROSSHAIR_TOP_CHEVRON_SIZE .01
+#define CROSSHAIR_TOP_CHEVRON_GAP .003
+// R, G, B, Alpha with a range of 0.0 to 1.0
+#define CROSSHAIR_TOP_CHEVRON_COLOR float4(1.0, 0.0, 0.0, 0.5)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_TOP_CHEVRON_DYNAMIC_COLOR 0
+
+
+// Bottom chevron shape settings
+#define CROSSHAIR_BOTTOM_CHEVRON_THICKNESS .001
+#define CROSSHAIR_BOTTOM_CHEVRON_SIZE .01
+#define CROSSHAIR_BOTTOM_CHEVRON_GAP .003
+// R, G, B, Alpha with a range of 0.0 to 1.0
+#define CROSSHAIR_BOTTOM_CHEVRON_COLOR float4(1.0, 0.0, 0.0, 0.5)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_BOTTOM_CHEVRON_DYNAMIC_COLOR 0
+
+
+// Circle shape settings - credit: Blizzie
+#define CROSSHAIR_CIRCLE_RADIUS  .023
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_CIRCLE_COLOR float4(1.0, 0.0, 0.0, 0.5)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_CIRCLE_DYNAMIC_COLOR 0
+
+
+// Cross shape settings - credit: Blizzie
+#define CROSSHAIR_CROSS_SIZE .01
+#define CROSSHAIR_CROSS_THICKNESS .000417
+#define CROSSHAIR_CROSS_BORDER_THICKNESS .000417
+#define CROSSHAIR_CROSS_GAP .005                          // Set this to 0.0 for no center gap
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_CROSS_INNER_COLOR float4(1.0, 1.0, 1.0, 0.5)
+#define CROSSHAIR_CROSS_BORDER_COLOR float4(0.0, 0.0, 0.0, 0.5)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_CROSS_INNER_DYNAMIC_COLOR 0
+#define CROSSHAIR_CROSS_BORDER_DYNAMIC_COLOR 0
+// Center offset, positive to move down/right, negative to move up/left.
+// For crosshairs an odd number of pixels thick, you need to set this to a value that equals half of a pixel
+// To get half of a pixel, take 0.5 / <your X resolution>. Do this on a calculator and enter the number.
+// For example, at 1920x1080, a half-pixel is 0.00026
+#define CROSSHAIR_CROSS_OFFSET_X 0.0
+#define CROSSHAIR_CROSS_OFFSET_Y 0.0
+
+
+
+// OPGL shape settings - credit: Inteoix
+#define CROSSHAIR_OPGL_RADIUS 0.00575
+#define CROSSHAIR_OPGL_WIDTH 0.0015
+#define CROSSHAIR_OPGL_CUTOFF 0.65
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_OPGL_COLOR float4(1.0, 1.0, 1.0, 0.75)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_OPGL_DYNAMIC_COLOR 1
+
+
+// Square shape settings
+// These *should* be after aspect ratio correction, making them appear the same size.
+#define CROSSHAIR_SQUARE_HEIGHT 0.01
+#define CROSSHAIR_SQUARE_WIDTH 0.01
+#define CROSSHAIR_SQUARE_THICKNESS 0.001
+// SMALL values here, will create a gap in the center of each side
+#define CROSSHAIR_SQUARE_HORIZ_GAP 0.005
+#define CROSSHAIR_SQUARE_VERT_GAP 0.005
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_SQUARE_COLOR float4(1.0, 1.0, 1.0, 0.75)
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_SQUARE_DYNAMIC_COLOR 0
+
+
+// Diamond shape settings - credit: Kimiko
+#define CROSSHAIR_DIAMOND_THICKNESS 0.001
+#define CROSSHAIR_DIAMOND_OUTLINE_ENABLE 1
+#define CROSSHAIR_DIAMOND_OUTLINE_THICKNESS 0.001
+#define CROSSHAIR_DIAMOND_OUTLINE_INSIDE_THICKNESS 0.0
+#define CROSSHAIR_DIAMOND_SIZE 0.01
+#define CROSSHAIR_DIAMOND_ANGLE 1.0 // not yet implemented!
+#define CROSSHAIR_DIAMOND_GAP 0.01 // currently buggy, set to same value as SIZE for best results
+// R, G, B, Alpha with a range of 0.0 to 1.0 
+#define CROSSHAIR_DIAMOND_COLOR float4( 1.0, 0.0, 0.0, 0.75 )
+#define CROSSHAIR_DIAMOND_OUTLINE_COLOR float4( 0.0, 0.0, 0.0, 1.0 )
+// Dynamic color - ignores color settings above (but uses alpha settings!!) and instead does roughly the inverse of whatever it's over.
+#define CROSSHAIR_DIAMOND_DYNAMIC_COLOR 0
+
+
+//MAKE SURE THIS FILES EXIST!!!! 
+//THIS SETTING IS NOT USED.
+#define CROSSHAIR_CUSTOM_1_NAME "CrosshairCustom1.usf"
+#define CROSSHAIR_CUSTOM_2_NAME "CrosshairCustom2.usf"
+#define CROSSHAIR_CUSTOM_3_NAME "CrosshairCustom3.usf"
+#define CROSSHAIR_CUSTOM_4_NAME "CrosshairCustom4.usf"
+#define CROSSHAIR_CUSTOM_5_NAME "CrosshairCustom5.usf"
+}
